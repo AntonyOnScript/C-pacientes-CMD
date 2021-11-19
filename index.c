@@ -49,22 +49,44 @@ int main() {
 
 void cadastro(){
     static int linha;
+    FILE *fptr;
+
+    fptr = fopen("dados.txt", "a+");
 
     do{
         printf("\nDigite o nome do paciente: ");
         scanf("%s", nome[linha]);
+        char conteudoLinha[1000];
+        strcat(conteudoLinha, "Paciente: ");
+        strcat(conteudoLinha, nome[linha]);
+        strcat(conteudoLinha, "\n");
 
         printf("\nDigite o email do paciente: ");
         scanf("%s", email[linha]);
+        strcat(conteudoLinha, "Email: ");
+        strcat(conteudoLinha, email[linha]);
+        strcat(conteudoLinha, "\n");
 
         printf("\nDigite o CPF do paciente: ");
         scanf("%d", &cpf[linha]);
+        strcat(conteudoLinha, "CPF: ");
+        strcat(conteudoLinha, &cpf[linha]);
+        strcat(conteudoLinha, "\n");
 
         printf("\nDigite o telefone do paciente: ");
         scanf("%d", &telefone[linha]);
+        strcat(conteudoLinha, "telefone: ");
+        strcat(conteudoLinha, &telefone[linha]);
+        strcat(conteudoLinha, "\n");
 
         printf("\nDigite a data de nascimento do paciente: ");
         scanf("%d", &dataNascimento[linha]);
+        strcat(conteudoLinha, "Nascido em: ");
+        strcat(conteudoLinha, &dataNascimento[linha]);
+        strcat(conteudoLinha, "\n");
+        
+        fprintf(fptr, "%s", conteudoLinha);
+        fclose(fptr);
 
         printf("\nDigite 1 para continuarou outro valor para sair.");
         scanf("%d", &op);
