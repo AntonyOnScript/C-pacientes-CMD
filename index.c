@@ -56,7 +56,8 @@ void cadastro(){
     do{
         printf("\nDigite o nome do paciente: ");
         scanf("%s", nome[linha]);
-        char conteudoLinha[1000];
+        char *conteudoLinha[1000];
+        memset(conteudoLinha, 0, 1000);
         strcat(conteudoLinha, "Paciente: ");
         strcat(conteudoLinha, nome[linha]);
         strcat(conteudoLinha, "\n");
@@ -68,19 +69,19 @@ void cadastro(){
         strcat(conteudoLinha, "\n");
 
         printf("\nDigite o CPF do paciente: ");
-        scanf("%d", &cpf[linha]);
+        scanf("%s", &cpf[linha]);
         strcat(conteudoLinha, "CPF: ");
         strcat(conteudoLinha, &cpf[linha]);
         strcat(conteudoLinha, "\n");
 
         printf("\nDigite o telefone do paciente: ");
-        scanf("%d", &telefone[linha]);
+        scanf("%s", &telefone[linha]);
         strcat(conteudoLinha, "telefone: ");
         strcat(conteudoLinha, &telefone[linha]);
         strcat(conteudoLinha, "\n");
 
         printf("\nDigite a data de nascimento do paciente: ");
-        scanf("%d", &dataNascimento[linha]);
+        scanf("%s", &dataNascimento[linha]);
         strcat(conteudoLinha, "Nascido em: ");
         strcat(conteudoLinha, &dataNascimento[linha]);
         strcat(conteudoLinha, "\n");
@@ -88,8 +89,8 @@ void cadastro(){
         fprintf(fptr, "%s", conteudoLinha);
         fclose(fptr);
 
-        printf("\nDigite 1 para continuarou outro valor para sair.");
-        scanf("%d", &op);
+        printf("\nDigite 1 para sair ou outro valor para sair.");
+        scanf("%s", &op);
         linha++;
     } while(op==1);
 }
