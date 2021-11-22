@@ -8,6 +8,13 @@
 
 char nome[SIZE][50];
 char email[SIZE][50];
+char diagnostico[SIZE][50];
+char estado[SIZE][50];
+char bairro[SIZE][50];
+char cidade[SIZE][50];
+char comorbidade[SIZE][50];
+char temComorbidade[SIZE][2];
+int cep[SIZE];
 int cpf[SIZE];
 int telefone[SIZE];
 int dataNascimento[SIZE];
@@ -80,12 +87,53 @@ void cadastro(){
         strcat(conteudoLinha, &telefone[linha]);
         strcat(conteudoLinha, "\n");
 
+        printf("\nDigite o CEP do paciente: ");
+        scanf("%s", &cep[linha]);
+        strcat(conteudoLinha, "CEP: ");
+        strcat(conteudoLinha, &cep[linha]);
+        strcat(conteudoLinha, "\n");
+
+        printf("\nDigite o estado do paciente: ");
+        scanf("%s", &estado[linha]);
+        strcat(conteudoLinha, "Estado: ");
+        strcat(conteudoLinha, &estado[linha]);
+        strcat(conteudoLinha, "\n");
+
+        printf("\nDigite o bairro do paciente: ");
+        scanf("%s", &bairro[linha]);
+        strcat(conteudoLinha, "Bairro: ");
+        strcat(conteudoLinha, &bairro[linha]);
+        strcat(conteudoLinha, "\n");
+
+        printf("\nDigite a cidade do paciente: ");
+        scanf("%s", &cidade[linha]);
+        strcat(conteudoLinha, "Cidade: ");
+        strcat(conteudoLinha, &cidade[linha]);
+        strcat(conteudoLinha, "\n");
+
         printf("\nDigite a data de nascimento do paciente: ");
         scanf("%s", &dataNascimento[linha]);
         strcat(conteudoLinha, "Nascido em: ");
         strcat(conteudoLinha, &dataNascimento[linha]);
         strcat(conteudoLinha, "\n");
         
+        printf("\nDigite a data de diagnostico do paciente: ");
+        scanf("%s", &diagnostico[linha]);
+        strcat(conteudoLinha, "Diagnosticado em: ");
+        strcat(conteudoLinha, &diagnostico[linha]);
+        strcat(conteudoLinha, "\n");
+        
+        printf("\nO paciente tem alguma comorbidade? digite s para SIM e n para NAO");
+        scanf("%s", &temComorbidade[linha]);
+        
+        if(&temComorbidade[linha] == "s") {
+            printf("\nDigite a(s) comorbidade(s) do paciente: ");
+            scanf("%s", &comorbidade[linha]);
+            strcat(conteudoLinha, "Comorbidade(s): ");
+            strcat(conteudoLinha, &comorbidade[linha]);
+            strcat(conteudoLinha, "\n");
+        }
+
         fprintf(fptr, "%s", conteudoLinha);
         fclose(fptr);
 
