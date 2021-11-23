@@ -123,10 +123,10 @@ void cadastro(){
         strcat(conteudoLinha, &diagnostico[linha]);
         strcat(conteudoLinha, "\n");
         
-        printf("\nO paciente tem alguma comorbidade? digite s para SIM e n para NAO");
+        printf("\nO paciente tem alguma comorbidade? digite s para SIM e n para NAO: ");
         scanf("%s", &temComorbidade[linha]);
         
-        if(&temComorbidade[linha] == "s") {
+        if(strcmp(temComorbidade, "s") == 0) {
             printf("\nDigite a(s) comorbidade(s) do paciente: ");
             scanf("%s", &comorbidade[linha]);
             strcat(conteudoLinha, "Comorbidade(s): ");
@@ -136,9 +136,9 @@ void cadastro(){
 
         fprintf(fptr, "%s", conteudoLinha);
         fclose(fptr);
-
-        printf("\nDigite 1 para sair ou outro valor para sair.");
-        scanf("%s", &op);
+        printf("\nDigite 1 para continuar ou outro valor para sair. ");
+        scanf("%d", &op);
         linha++;
+
     } while(op==1);
 }
