@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-#define SIZE 200
+#define SIZE 600
 
 char nome[SIZE][50];
 char email[SIZE][50];
@@ -14,10 +15,14 @@ char bairro[SIZE][50];
 char cidade[SIZE][50];
 char comorbidade[SIZE][50];
 char temComorbidade[SIZE][2];
+char dataNascimento[SIZE][50];
 int cep[SIZE];
 int cpf[SIZE];
 int telefone[SIZE];
-int dataNascimento[SIZE];
+int diaNascimento[SIZE];
+int mesNascimento[SIZE];
+int anoNascimento[SIZE];
+int anoAtual[SIZE];
 
 int op;
 
@@ -42,10 +47,10 @@ int main() {
     scanf("%s", login);
     printf("\nsenha:");
     scanf("%s", senha);
-
+    
     /* strcmp - essa função é responsável por comparar strings   */
     if((strcmp(login, p[0].login)==0) && (strcmp(senha, p[0].senha)==0)) {
-        printf("Usuário logado.\n");
+        printf("Usuario logado.\n");
         cadastro();
     } else {
         printf("Login e/ou senha incorretos.\n");
@@ -57,9 +62,13 @@ int main() {
 void cadastro(){
     static int linha;
     FILE *fptr;
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    int anoAtual = tm.tm_year + 1900;
+    printf("%d", anoAtual);
 
     fptr = fopen("dados.txt", "a+");
-
+    
     do{
         printf("\nDigite o nome do paciente: ");
         scanf("%s", nome[linha]);
@@ -111,10 +120,28 @@ void cadastro(){
         strcat(conteudoLinha, &cidade[linha]);
         strcat(conteudoLinha, "\n");
 
-        printf("\nDigite a data de nascimento do paciente: ");
-        scanf("%s", &dataNascimento[linha]);
+        printf("\nDigite o dia de nascimento do paciente: ");
+        scanf("%s", &diaNascimento[linha]);
+
+        printf("\nDigite o mes de nascimento do paciente: ");
+        scanf("%s", &mesNascimento[linha]); 
+
+        printf("\nDigite o ano de nascimento do paciente: ");
+        scanf("%s", &anoNascimento[linha]);
+        int idade = anoAtual - &anoNascimento[linha]; // n consigo definir a idade aqui
+
+        strcat(dataNascimento, diaNascimento);
+        strcat(dataNascimento, "/");
+        strcat(dataNascimento, mesNascimento);
+        strcat(dataNascimento, "/");
+        strcat(dataNascimento, anoNascimento);
+
+        strcat(conteudoLinha, "idade em: ");
+        strcat(conteudoLinha, idade);
+        strcat(conteudoLinha, "\n");
+
         strcat(conteudoLinha, "Nascido em: ");
-        strcat(conteudoLinha, &dataNascimento[linha]);
+        strcat(conteudoLinha, dataNascimento);
         strcat(conteudoLinha, "\n");
         
         printf("\nDigite a data de diagnostico do paciente: ");
