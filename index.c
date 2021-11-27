@@ -5,7 +5,7 @@
 #include <string.h>
 #include <time.h>
 
-#define SIZE 600
+#define SIZE 700
 
 char nome[SIZE][50];
 char email[SIZE][50];
@@ -13,6 +13,7 @@ char diagnostico[SIZE][50];
 char estado[SIZE][50];
 char bairro[SIZE][50];
 char cidade[SIZE][50];
+char idadeString[SIZE][50];
 char comorbidade[SIZE][50];
 char temComorbidade[SIZE][2];
 char dataNascimento[SIZE][50];
@@ -23,6 +24,8 @@ int diaNascimento[SIZE];
 int mesNascimento[SIZE];
 int anoNascimento[SIZE];
 int anoAtual[SIZE];
+int idade;
+int anoNascimentoNumero;
 
 int op;
 
@@ -42,7 +45,6 @@ int main() {
     /* strcpy - essa função é responsável por armazenar strings dentro de um vetor */
     strcpy(p[0].login, "Medico");
     strcpy(p[0].senha, "123");
-
     printf("\nlogin:"); // \t = Tab;
     scanf("%s", login);
     printf("\nsenha:");
@@ -65,7 +67,6 @@ void cadastro(){
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     int anoAtual = tm.tm_year + 1900;
-    printf("%d", anoAtual);
 
     fptr = fopen("dados.txt", "a+");
     
@@ -128,17 +129,17 @@ void cadastro(){
 
         printf("\nDigite o ano de nascimento do paciente: ");
         scanf("%s", &anoNascimento[linha]);
-        int idade = anoAtual - &anoNascimento[linha]; // n consigo definir a idade aqui
+
+        anoNascimentoNumero = atoi(&anoNascimento[linha]);
+        idade = anoAtual - anoNascimentoNumero;
+
+        itoa(idade, idadeString, 10); // transforma idade (int) para idade (string)
 
         strcat(dataNascimento, diaNascimento);
         strcat(dataNascimento, "/");
         strcat(dataNascimento, mesNascimento);
         strcat(dataNascimento, "/");
         strcat(dataNascimento, anoNascimento);
-
-        strcat(conteudoLinha, "idade em: ");
-        strcat(conteudoLinha, idade);
-        strcat(conteudoLinha, "\n");
 
         strcat(conteudoLinha, "Nascido em: ");
         strcat(conteudoLinha, dataNascimento);
@@ -165,7 +166,7 @@ void cadastro(){
         fclose(fptr);
         printf("\nDigite 1 para continuar ou outro valor para sair. ");
         scanf("%d", &op);
+        memset (&anoNascimentoNumero, 0, sizeof (anoNascimentoNumero)); // limpa memória da variavel para o próximo loop, caso ocorra.
         linha++;
-
     } while(op==1);
 }
