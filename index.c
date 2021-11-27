@@ -63,12 +63,13 @@ int main() {
 
 void cadastro(){
     static int linha;
-    FILE *fptr;
+    FILE *registros;
+    FILE *registrosIdosos;
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     int anoAtual = tm.tm_year + 1900;
 
-    fptr = fopen("dados.txt", "a+");
+    registros = fopen("dados.txt", "a+");
     
     do{
         printf("\nDigite o nome do paciente: ");
@@ -133,7 +134,7 @@ void cadastro(){
         anoNascimentoNumero = atoi(&anoNascimento[linha]);
         idade = anoAtual - anoNascimentoNumero;
 
-        itoa(idade, idadeString, 10); // transforma idade (int) para idade (string)
+        itoa(idade, idadeString, 10); // transforma idade (int) para idadeString (string)
 
         strcat(dataNascimento, diaNascimento);
         strcat(dataNascimento, "/");
@@ -162,8 +163,26 @@ void cadastro(){
             strcat(conteudoLinha, "\n");
         }
 
-        fprintf(fptr, "%s", conteudoLinha);
-        fclose(fptr);
+        fprintf(registros, "%s", conteudoLinha);
+        fclose(registros);
+        if(idade >= 65) {
+            memset(conteudoLinha, 0, 1000);
+
+            registrosIdosos = fopen("idosos.txt", "a+");
+
+            strcat(conteudoLinha, "CEP: ");
+            strcat(conteudoLinha, &cep[linha]);
+            strcat(conteudoLinha, "\n");
+
+            strcat(conteudoLinha, "Idade: ");
+            strcat(conteudoLinha, idadeString);
+            strcat(conteudoLinha, "\n");
+
+            fprintf(registrosIdosos, "%s", conteudoLinha);
+            fclose(registrosIdosos);
+
+            memset(conteudoLinha, 0, 1000);
+        }
         printf("\nDigite 1 para continuar ou outro valor para sair. ");
         scanf("%d", &op);
         memset (&anoNascimentoNumero, 0, sizeof (anoNascimentoNumero)); // limpa memória da variavel para o próximo loop, caso ocorra.
